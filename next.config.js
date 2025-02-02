@@ -1,14 +1,31 @@
-/** @type {import('next').NextConfig} */
+// @ts-check
+const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 
-const isProd = process.env.NODE_ENV === 'production'
-const nextConfig = {
+const devConfig = {
     output:'export',
-       assetPrefix: isProd ? '/InterdimensialCable/' : undefined,
-       eslint: {
+    assetPrefix: undefined,
+}
+
+const proConfig = {
+    output:'export',
+    assetPrefix: '/InterdimensialCable/' ,
+    eslint: {
         // Warning: This allows production builds to successfully complete even if
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
       },
-};
+}
 
-module.exports = nextConfig
+module.exports = (phase, { defaultConfig }) => {
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    return {
+      /* development only config options here */
+      ...devConfig
+    }
+  }
+  return {
+    /* config options for all phases except development here */
+    ...proConfig
+  }
+}
+
