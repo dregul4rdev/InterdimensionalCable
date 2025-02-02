@@ -1,11 +1,11 @@
-import SECRECTS from "../../secrets.json" assert { type: "json" };
+let SECRECTS = {YOUTUBE_API : ""};
 const API_KEY = SECRECTS.YOUTUBE_API;
 const BASE_API_URI = "https://youtube.googleapis.com/youtube/v3";
 
 export async function getVideos(
   search: ISearchObject
 ): Promise<IGetVideosResponse> {
-  if (!API_KEY) throw "APIKEY not defined";
+  if (API_KEY !== "") throw "APIKEY not defined";
   let query = search.searcTerms.join("%7C");
   const options = {
     videoEmbeddable: "true",
@@ -25,7 +25,7 @@ export async function getVideos(
 export async function getVideosDetail(
   videoIds: Array<string>
 ): Promise<IGetVideosDetailResponse> {
-  if (!API_KEY) throw "APIKEY not defined";
+  if (API_KEY !== "") throw "APIKEY not defined";
 
   //https://developers.google.com/youtube/v3/docs/videos/list?hl=es-419
   const response = await fetch(
