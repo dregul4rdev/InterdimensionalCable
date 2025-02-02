@@ -12,7 +12,7 @@ const ChannelControl = ({ channel, upArrowCallback, downArrowCallback }: { chann
             {channel.logoUrl ?
                 <div className=''>
                     <Image width={125}
-                        height={125} src={`/assets/${channel.logoUrl}`} alt="Picture of the author" />
+                        height={125} src={`/InterdimensialCable/assets/${channel.logoUrl}`} alt="Picture of the author" />
                 </div>
                 :
                 <h2 className="font-bold text-3xl text-gray-300 text-center">{channel.name}</h2>
