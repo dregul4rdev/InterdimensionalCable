@@ -1,13 +1,7 @@
-// @ts-check
- /** @type {import('next').NextConfig} */
-const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
+/** @type {import('next').NextConfig} */
 
-const devConfig = {
-    output:'export',
-    assetPrefix: undefined,
-}
 
-const proConfig = {
+const nextConfig = {
     output:'export',
     eslint: {
         // Warning: This allows production builds to successfully complete even if
@@ -16,16 +10,4 @@ const proConfig = {
       },
 }
 
-module.exports = (phase, { defaultConfig }) => {
-  if (phase === PHASE_DEVELOPMENT_SERVER) {
-    return {
-      /* development only config options here */
-      ...devConfig
-    }
-  }
-  return {
-    /* config options for all phases except development here */
-    ...proConfig
-  }
-}
-
+module.exports = nextConfig
