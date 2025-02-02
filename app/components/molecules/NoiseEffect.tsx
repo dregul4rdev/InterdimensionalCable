@@ -4,7 +4,7 @@ const NoiseEffect = ({ visible= false }: { visible:boolean }) => {
     return (<>
     {visible?< >
             <audio autoPlay
-              src="/InterdimensialCable/assets/tv-static.mp3">
+              src="/InterdimensionalCable/assets/tv-static.mp3">
               Your browser does not support the
               <code>audio</code> element.
             </audio>
