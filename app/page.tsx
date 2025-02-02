@@ -118,7 +118,7 @@ export default function Home() {
             previusCallback={previusChannelHandler} />
         </> : <></>}
       {DEV_MODE ?
-        <button className="m-4 z-50 absolute bottom-0 right-0 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={gnerateProgramingHandler}>Regenerar programacion</button> :
+        <button className="m-4 z-50 absolute bottom-0 right-0 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler()}>Regenerar programacion</button> :
         <></>}
     </main>
   )
