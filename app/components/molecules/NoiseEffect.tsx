@@ -10,7 +10,7 @@ const NoiseEffect = ({ visible= false }: { visible:boolean }) => {
             </audio>
             <video className="absolute z-10 w-auto 
             min-w-full min-h-full max-w-none" autoPlay >
-              <source src="/assets/tv_1.mov" type="video/mp4" />
+              <source src="/InterdimensialCable/assets/tv_1.mov" type="video/mp4" />
               <track
                 src="/assets/"
                 kind="subtitles"
