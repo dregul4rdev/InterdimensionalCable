@@ -11,7 +11,7 @@ const ChannelControl = ({ channel, upArrowCallback, downArrowCallback }: { chann
             <ArrowDownBtn onClick={upArrowCallback} />
             {channel.logoUrl ?
                 <div className=''>
-                    <Image width={125}
+                    <Image unoptimized = {true}  width={125}
                         height={125} src={`/InterdimensialCable/assets/${channel.logoUrl}`} alt="Picture of the author" />
                 </div>
                 :

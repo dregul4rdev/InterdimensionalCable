@@ -6,13 +6,13 @@ import { globalReducer } from './globalReducer'
 export interface IGlobalStorage {
     programming: IProgramming,
     currentChannelIndex: number,
-    currentVideoIndex: number
+    currentVideo: {index: number, currentSecond: number}
 }
 
 const storage: IGlobalStorage = {
     programming: programming,
     currentChannelIndex: 0,
-    currentVideoIndex: 0
+    currentVideo: {index: 0, currentSecond: 0}
 }
 
 

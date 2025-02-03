@@ -11,7 +11,7 @@ export const ACTIONS = {
   LOAD_PROGRAMMING: "LOAD_PROGRAMMING",
   NEXT_CHANNEL: "NEXT_CHANNEL",
   PREVIOUS_CHANNEL: "PREVIOUS_CHANNEL",
-  SET_CURRENT_VIDEO: "SET_CURRENT_VIDEO_INDEX"
+  SET_CURRENT_VIDEO: "SET_CURRENT_VIDEO"
 }
 
 export function globalReducer(storage: IGlobalStorage, action: IAction) {
@@ -38,10 +38,10 @@ export function globalReducer(storage: IGlobalStorage, action: IAction) {
       return { ...storage, programming: action.payload }
     }
     case ACTIONS.SET_CURRENT_VIDEO: {
-      let currentVideoIndex = action.payload
+      let currentVideo = action.payload
       console.log(ACTIONS.SET_CURRENT_VIDEO)
       console.log("current video index: ",  action)
-      return { ...storage, currentVideoIndex: currentVideoIndex }
+      return { ...storage, currentVideo: currentVideo }
     }
 
     default: {
