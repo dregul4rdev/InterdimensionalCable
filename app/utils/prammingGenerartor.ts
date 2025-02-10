@@ -16,7 +16,7 @@ export async function generateProgramming(
         })
       : channels;
 
-  let _programming: IProgramming = currentProgramming
+  let _programming: IProgramming =  onlyNewChannels && currentProgramming
     ? currentProgramming
     : {
         date: new Date(),
@@ -34,11 +34,13 @@ export async function generateProgramming(
       videos: [],
       includeVideoId: channel.includeVideoId,
     };
-    let videos = await getVideos({
+
+    let videos = channel.searchTxt.length > 0? await getVideos({
       type: channel.channelType,
       searcTerms: channel.searchTxt,
-    });
-    if (videos.items && videos.items.length > 0) {
+    }) : null;
+
+    if (videos && videos.items && videos.items.length > 0) {
       for (let v of videos.items) {
         console.log(v);
         const vIntace: IVideo = {
@@ -49,13 +51,27 @@ export async function generateProgramming(
         };
         channelIntance.videos.push(vIntace);
       }
-      console.log(channel.name, " Added!!");
-      _programming.channelList.push(channelIntance);
-    } else {
+    }
+    
+    debugger;
+    //get included videos
+    const includedVideos = await getIncludedVideos(
+      channelIntance.includeVideoId
+    );
+
+    channelIntance.videos.push(...includedVideos);
+    channelIntance.videos = shuffleVideos(channelIntance.videos);
+
+    if(channelIntance.videos.length > 0){
+    console.log(channel.name, " Added!!");
+    _programming.channelList.push(channelIntance);
+    }
+    else {
       console.log(channel.name, " Not results");
     }
   }
 
+  debugger
   updateProgrammingDetails(_programming);
 
   return _programming;
@@ -95,4 +111,38 @@ async function setVideoDuration(videoList: IVideo[]) {
   });
 
   return videoListCopy;
+}
+
+async function getIncludedVideos(videIds: string[]) {
+  let videos: IVideo[] = [];
+  let videoData = await getVideosDetail(videIds);
+
+  for (let data of videoData.items) {
+    videos.push({
+      videoId: data.id,
+      name: data.snippet.title,
+      description: data.snippet.description,
+      duration: convertISO8601ToSenconds(data.contentDetails.duration),
+    });
+  }
+  return videos;
+}
+
+function shuffleVideos(videoList: IVideo[]) {
+  let currentIndex = videoList.length;
+  let arrayCopy = [...videoList];
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [arrayCopy[currentIndex], arrayCopy[randomIndex]] = [
+      arrayCopy[randomIndex],
+      arrayCopy[currentIndex],
+    ];
+  }
+  return arrayCopy;
 }
