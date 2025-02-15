@@ -13,7 +13,7 @@ import NoiseEffect from "./components/molecules/NoiseEffect";
 
 
 export default function Home() {
-  const DEV_MODE = false;
+  const DEV_MODE = true;
   const [currentChannelIndex, setCurrentChannelIndex] = useState(0);
   const [noiseVisible, setNoiseVisible] = useState(false);
   const { programming, currentVideo } = useGobalStorage();
@@ -65,6 +65,7 @@ export default function Home() {
         localStorage.setItem('programming', JSON.stringify(newProgramming));
         console.log("programmign from generator:", newProgramming)
         GlobalDispatchContext({ type: "LOAD_PROGRAMMING", payload: newProgramming });
+        alert("completed")
       }
       catch (err) {
         console.log(err)
@@ -75,6 +76,7 @@ export default function Home() {
   if (DEV_MODE) {
     useEffect(() => {
       (async () => {
+        debugger
         const programming: IProgramming = JSON.parse(localStorage.getItem('programming') || "null");
         if (programming) {
           console.log("programmign from local storage:", programming)
@@ -115,8 +117,12 @@ export default function Home() {
             nextCallback={nextChannelHandler}
             previusCallback={previusChannelHandler} />
         </> : <></>}
-      {DEV_MODE ?
-        <button className="m-4 z-50 absolute bottom-0 right-0 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler()}>Regenerar programacion</button> :
+      {DEV_MODE ?<div className=" flex flex-col z-50 absolute bottom-0 right-0 ">
+        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler()}>Rn</button>
+        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler(false)}>R</button>
+      
+        </div>
+         :
         <></>}
     </main>
   )

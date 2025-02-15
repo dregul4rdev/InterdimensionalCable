@@ -6,7 +6,7 @@ const channels:Array<IChannelDefinition> = [
         description: "ISPN Fight",
         logoUrl: "ISPN.png",
         channelType: "video",
-        searchTxt: ["carjitsu","chess boxing","Extreme Ironing Championships", "Toe Wrestling   Championships"],
+        searchTxt: ["carjitsu","chess boxing","Extreme Ironing"],
         includeVideoId: []
      },
     {
@@ -14,7 +14,7 @@ const channels:Array<IChannelDefinition> = [
         description: "NON-NPC",
         logoUrl: "non-npc2.png",
         channelType: "video",
-        searchTxt: ["Oblivion NPC Conversation","Oblivion NPC Dialogue"],
+        searchTxt: ["Oblivion NPC Conversation"],
         includeVideoId: []
     },
     {
@@ -22,8 +22,8 @@ const channels:Array<IChannelDefinition> = [
         description: "n3ws",
         logoUrl: "n3ws.png",
         channelType: "video",
-        searchTxt: ["pseudo-documentary", "Who Is America?"],
-        includeVideoId: []
+        searchTxt: [""],
+        includeVideoId: ["83UnO-b8XUM"]
     },
     {
         name: "Min",
@@ -38,8 +38,8 @@ const channels:Array<IChannelDefinition> = [
         description: "What the fuck did i just watch?",
         logoUrl: "wtfdijw.png",
         channelType: "video",
-        searchTxt: ["Joan Cornellà"],
-        includeVideoId: []
+        searchTxt: [],
+        includeVideoId: ["lrALS1vLaSA","il2j3K_G4PE","WWvK5VLQrno&t"]
     },
 
     {
@@ -57,7 +57,7 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: ["synthwave"],
-        includeVideoId: []
+        includeVideoId: ["RECawNrkABI","Y4FrnrD7jCA","9RHFFeQ2tu4"]
     },
     {
         name: "Moovis",
@@ -72,27 +72,62 @@ const channels:Array<IChannelDefinition> = [
         description: "",
         logoUrl: "",
         channelType: "video",
-        searchTxt: ["Philomena Cunk's",],
-        includeVideoId: []
+        searchTxt: ["philomena cunk moments of wonder",],
+        includeVideoId: ["7-KpbD_RnPs&"]
     },
     {
         name: "Commercials",
         description: "",
         logoUrl: "",
         channelType: "video",
-        searchTxt: ["JAPANESE COMMERCIAL", "Orocan"],
-        includeVideoId: []
+        searchTxt: ["JAPANESE COMMERCIAL", ],
+        includeVideoId: ['8YabenjHy8c']
     },
     {
         name: "WithDOOM",
         description: "",
         logoUrl: "",
         channelType: "video",
-        searchTxt: ["When the DOOM music kicks in"],
+        searchTxt: ["with doom music"],
         includeVideoId: []
     },
 
+    {
+        name: "ShowShow",
+        description: "",
+        logoUrl: "",
+        channelType: "video",
+        searchTxt: [],
+        includeVideoId: ["gKQHGnlCvzI"]
+    },
+    {
+        name: "Real video Music",
+        description: "",
+        logoUrl: "",
+        channelType: "video",
+        searchTxt: [],
+        includeVideoId: ["z_mUo5Zg-GM","eWBYDJbqh-c","Am7kr_lLbsw", "lckf6aOA0Ps"]
+    },
 
+    {
+        name: "interdimensinal broadcast",
+        description: "",
+        logoUrl: "",
+        channelType: "video",
+        searchTxt: ["[Mock Broadcast]"],
+        includeVideoId: []
+    },
+
+    {
+        name: "the Art Channel",
+        description: "",
+        logoUrl: "",
+        channelType: "video",
+        searchTxt: [],
+        includeVideoId: ["xKAkmHIV3vs","xo10F9IBGRk","bYgZ1ppusbs","5SRpUv62Dh0"]
+    },
+
+    
 
 ]
 

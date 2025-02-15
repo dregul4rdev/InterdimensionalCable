@@ -1,16 +1,27 @@
-let SECRECTS = {YOUTUBE_API : ""};
-const API_KEY = SECRECTS.YOUTUBE_API;
+
+ async function getApiKey() {
+  return import("../../API_KEY.json").then(m=>{
+    if(m.YOUTUBE_API){
+      return m.YOUTUBE_API
+    } 
+    return ""
+  })
+  
+}
+
 const BASE_API_URI = "https://youtube.googleapis.com/youtube/v3";
 
 export async function getVideos(
   search: ISearchObject
 ): Promise<IGetVideosResponse> {
-  if (API_KEY !== "") throw "APIKEY not defined";
+  
+  const API_KEY = await getApiKey();
+  if (API_KEY == "") throw "APIKEY not defined";
   let query = search.searcTerms.join("%7C");
   const options = {
     videoEmbeddable: "true",
     videoSyndicated: "true",
-    maxResults: 50,
+    maxResults: 10,
   };
   //https://developers.google.com/youtube/v3/docs/search/list?hl=es-419
   const response = await fetch(
@@ -25,7 +36,8 @@ export async function getVideos(
 export async function getVideosDetail(
   videoIds: Array<string>
 ): Promise<IGetVideosDetailResponse> {
-  if (API_KEY !== "") throw "APIKEY not defined";
+  const API_KEY = await getApiKey();
+  if (API_KEY == "") throw "APIKEY not defined";
 
   //https://developers.google.com/youtube/v3/docs/videos/list?hl=es-419
   const response = await fetch(
