@@ -34,6 +34,7 @@ export const calculateCurrentVideoIndexDuration = (
 };
 
 export const validateIndex = (index: number, lastIndex: number) => {
+  if (lastIndex === 0) return 0;
   if (index <= lastIndex) return index;
   else {
     return index % lastIndex;
