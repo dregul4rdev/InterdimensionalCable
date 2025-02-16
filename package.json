@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",

@@ -1,7 +1,7 @@
-import channels from "../channels";
+import {dayjs} from './util';
 import { getVideos, getVideosDetail } from "../apis/youtube-api";
-import { IProgramming, IChannel, IVideo } from "../programming";
-import { convertISO8601ToSenconds } from "./util";
+import channels from "../channels";
+import { IChannel, IProgramming, IVideo } from "../programming";
 
 export async function generateProgramming(
   onlyNewChannels = true,
@@ -98,11 +98,11 @@ async function setVideoDuration(videoList: IVideo[]) {
 
   const videoListCopy = videoList.map((item) => {
     let video = item;
-    for (let data of videoData.items) {
+		for (let data of videoData.items) {
       if (item.videoId === data.id) {
         video = {
           ...video,
-          duration: convertISO8601ToSenconds(data.contentDetails.duration),
+          duration: dayjs.duration(data.contentDetails.duration).asSeconds(),
         };
         break;
       }
@@ -122,7 +122,7 @@ async function getIncludedVideos(videIds: string[]) {
       videoId: data.id,
       name: data.snippet.title,
       description: data.snippet.description,
-      duration: convertISO8601ToSenconds(data.contentDetails.duration),
+      duration: dayjs.duration(data.contentDetails.duration).asSeconds(),
     });
   }
   return videos;
