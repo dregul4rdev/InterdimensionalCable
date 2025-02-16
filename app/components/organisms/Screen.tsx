@@ -14,12 +14,12 @@ const Screen = ({ videos, currentVideoIndex = 0, currentSecond = 0, onVideoLoade
   const currentVideoId = videos[currentVideoIndex].videoId
  
   const nextVideoIndex = () => {
-    return validateIndex(currentVideoIndex + 1, videos.length - 1)
+    return validateIndex(currentVideoIndex + 1, videos.length)
   }
 
- 
 
   const onEnd: YouTubeProps['onEnd'] = (event: { target: any; }) => {
+    debugger
     let player = event.target;
     const nextVideo = {index: nextVideoIndex(), currentSecond: 0 }
     GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload: nextVideo })
