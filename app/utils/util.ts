@@ -33,12 +33,8 @@ export const calculateCurrentVideoIndexDuration = (
   return { videoIndex: videoIndex - 1, currentSecondOfTheVideo };
 };
 
-export const validateIndex = (index: number, lastIndex: number) => {
-  if (lastIndex === 0) return 0;
-  if (index <= lastIndex) return index;
-  else {
-    return index % lastIndex;
-  }
+export const validateIndex = (index: number, arraySize: number) => {
+  return  index % arraySize;
 };
 
 export const convertISO8601ToSenconds = (durationStringISO8601: string) => {
