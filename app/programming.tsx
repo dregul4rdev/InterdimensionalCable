@@ -17,6 +17,7 @@ export interface IChannel {
     totalDuration?: number,
     searchTxt: Array<string>,
     includeVideoId: Array<string>,
+    includedPlaylistIds: Array<string>,
 }
 
 export interface IVideo {

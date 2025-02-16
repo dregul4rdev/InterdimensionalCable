@@ -6,16 +6,18 @@ const channels:Array<IChannelDefinition> = [
         description: "ISPN Fight",
         logoUrl: "ISPN.png",
         channelType: "video",
-        searchTxt: ["carjitsu","chess boxing","Extreme Ironing"],
-        includeVideoId: []
-     },
+        searchTxt: [],
+        includeVideoId: ["yB9l6rODUSs"],
+        includedPlaylistIds: ["PLpryvTA9UnRaynRUgd6kJ735VEdTdfdzQ","PLDNv41WjI5T72onzwdEh0_eRieYeVanZG","PLG5O5LcjpZRkaQDm5bvk5wv9SujbaHt-T"]
+    },
     {
         name: "NON-NPC",
         description: "NON-NPC",
         logoUrl: "non-npc2.png",
         channelType: "video",
-        searchTxt: ["Oblivion NPC Conversation"],
-        includeVideoId: []
+        searchTxt: [],
+        includeVideoId: [],
+        includedPlaylistIds: ["PLZ_BSXRPXtr1GkWSqdPUR_IuX5m9vWalS","PLE41-TI1Bz_W6Jf5etglXsaqV7O9QEfzv"]
     },
     {
         name: "n3ws",
@@ -23,15 +25,17 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "n3ws.png",
         channelType: "video",
         searchTxt: [""],
-        includeVideoId: ["83UnO-b8XUM"]
+        includeVideoId: ["83UnO-b8XUM"],
+        includedPlaylistIds: []
     },
     {
         name: "Min",
         description: "Music internet",
         logoUrl: "min.png",
         channelType: "video",
-        searchTxt: ["pogo Wonderland", "SLOW REVERB", "Synthwave Remix"],
-        includeVideoId: []
+        searchTxt: [ "SLOW REVERB", "Synthwave Remix"],
+        includeVideoId: [],
+        includedPlaylistIds: ["PL99E0036D14E8B058"]
     },
     {
         name: "WTFDIJW",
@@ -39,7 +43,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "wtfdijw.png",
         channelType: "video",
         searchTxt: [],
-        includeVideoId: ["lrALS1vLaSA","il2j3K_G4PE","WWvK5VLQrno&t"]
+        includeVideoId: ["lrALS1vLaSA", "il2j3K_G4PE", "WWvK5VLQrno&t"],
+        includedPlaylistIds: ["PL8Q1hAYWTz_-qDFcQNM2ixvk91mY3ENc3","PLVJhB7LDgNqLeoc8OLHpSFpg8J5HhaRia","PLtdJnn6SWovDbNkNL33tLGqvx9RMi-O68"]
     },
 
     {
@@ -48,7 +53,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "CF.png",
         channelType: "video",
         searchTxt: ["street fighter pastores"],
-        includeVideoId: []
+        includeVideoId: [],
+        includedPlaylistIds: ["PLrQN6-yIDpUOlHR06FSg4vAezAIfmxr5Z"]
     },
 
     {
@@ -57,7 +63,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: ["synthwave"],
-        includeVideoId: ["RECawNrkABI","Y4FrnrD7jCA","9RHFFeQ2tu4"]
+        includeVideoId: ["RECawNrkABI", "Y4FrnrD7jCA", "9RHFFeQ2tu4"],
+        includedPlaylistIds: []
     },
     {
         name: "Moovis",
@@ -65,23 +72,26 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: ["DROLE FACTORY",],
-        includeVideoId: []
+        includeVideoId: [],
+        includedPlaylistIds: []
     },
     {
         name: "UnHistory Channel",
         description: "",
         logoUrl: "",
         channelType: "video",
-        searchTxt: ["philomena cunk moments of wonder",],
-        includeVideoId: ["7-KpbD_RnPs&"]
+        searchTxt: [],
+        includeVideoId: ["7-KpbD_RnPs&"],
+        includedPlaylistIds: ["PLAHuYkmCmARf_GCrQb2IScaD3C4dpuSRm","PLZ8c54cxQG2EbsMCpbX0wVmi71Z4jJ-4n"]
     },
     {
         name: "Commercials",
         description: "",
         logoUrl: "",
         channelType: "video",
-        searchTxt: ["JAPANESE COMMERCIAL", ],
-        includeVideoId: ['8YabenjHy8c']
+        searchTxt: ["JAPANESE COMMERCIAL",],
+        includeVideoId: ['8YabenjHy8c'],
+        includedPlaylistIds: ["PLl8NyjRVICgYpZam4yy42ONhb31_x8edh"]
     },
     {
         name: "WithDOOM",
@@ -89,7 +99,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: ["with doom music"],
-        includeVideoId: []
+        includeVideoId: [],
+        includedPlaylistIds: ["PLd7aaulDH-Yg38TDdYNtc_5tmEpk96B-7"]
     },
 
     {
@@ -98,7 +109,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: [],
-        includeVideoId: ["gKQHGnlCvzI"]
+        includeVideoId: ["gKQHGnlCvzI","Za2FVIo25kA"],
+        includedPlaylistIds: []
     },
     {
         name: "Real video Music",
@@ -106,7 +118,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: [],
-        includeVideoId: ["z_mUo5Zg-GM","eWBYDJbqh-c","Am7kr_lLbsw", "lckf6aOA0Ps"]
+        includeVideoId: ["z_mUo5Zg-GM", "eWBYDJbqh-c", "Am7kr_lLbsw", "lckf6aOA0Ps","yBLdQ1a4-JI"],
+        includedPlaylistIds: []
     },
 
     {
@@ -115,7 +128,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: ["[Mock Broadcast]"],
-        includeVideoId: []
+        includeVideoId: [],
+        includedPlaylistIds: []
     },
 
     {
@@ -124,7 +138,8 @@ const channels:Array<IChannelDefinition> = [
         logoUrl: "",
         channelType: "video",
         searchTxt: [],
-        includeVideoId: ["xKAkmHIV3vs","xo10F9IBGRk","bYgZ1ppusbs","5SRpUv62Dh0"]
+        includeVideoId: ["xKAkmHIV3vs", "xo10F9IBGRk", "bYgZ1ppusbs", "5SRpUv62Dh0"],
+        includedPlaylistIds: []
     },
 
     
@@ -140,4 +155,5 @@ export interface IChannelDefinition {
     channelType: string,
     searchTxt: Array<string>,
     includeVideoId: Array<string>,
+    includedPlaylistIds: Array<string>,
 }

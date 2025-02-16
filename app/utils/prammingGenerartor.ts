@@ -1,5 +1,9 @@
-import channels from "../channels";
-import { getVideos, getVideosDetail } from "../apis/youtube-api";
+import channels, { IChannelDefinition } from "../channels";
+import {
+  getVideos,
+  getVideosDetail,
+  getVideosFromPlaylist,
+} from "../apis/youtube-api";
 import { IProgramming, IChannel, IVideo } from "../programming";
 import { convertISO8601ToSenconds } from "./util";
 
@@ -16,68 +20,83 @@ export async function generateProgramming(
         })
       : channels;
 
-  let _programming: IProgramming =  onlyNewChannels && currentProgramming
-    ? currentProgramming
-    : {
-        date: new Date(),
-        channelList: [],
-      };
+  let _programming: IProgramming =
+    onlyNewChannels && currentProgramming
+      ? currentProgramming
+      : {
+          date: new Date(),
+          channelList: [],
+        };
 
   for (let channel of _channels) {
-    let channelIntance: IChannel = {
-      name: channel.name,
-      channelType: channel.channelType,
-      description: channel.description,
-      logoImg: null,
-      logoUrl: channel.logoUrl,
-      searchTxt: channel.searchTxt,
-      videos: [],
-      includeVideoId: channel.includeVideoId,
-    };
 
-    let videos = channel.searchTxt.length > 0? await getVideos({
-      type: channel.channelType,
-      searcTerms: channel.searchTxt,
-    }) : null;
+   const  channelIntance = await  generateChannel(channel);
 
-    if (videos && videos.items && videos.items.length > 0) {
-      for (let v of videos.items) {
-        console.log(v);
-        const vIntace: IVideo = {
-          name: v.snippet.title,
-          description: v.snippet.description,
-          videoId: v.id.videoId,
-          duration: 0,
-        };
-        channelIntance.videos.push(vIntace);
-      }
-    }
-    
-    debugger;
-    //get included videos
-    const includedVideos = await getIncludedVideos(
-      channelIntance.includeVideoId
-    );
-
-    channelIntance.videos.push(...includedVideos);
-    channelIntance.videos = shuffleVideos(channelIntance.videos);
-
-    if(channelIntance.videos.length > 0){
-    console.log(channel.name, " Added!!");
-    _programming.channelList.push(channelIntance);
-    }
-    else {
+    if (channelIntance.videos.length > 0) {
+      console.log(channel.name, " Added!!");
+      _programming.channelList.push(channelIntance);
+    } else {
       console.log(channel.name, " Not results");
     }
   }
 
-  debugger
-  updateProgrammingDetails(_programming);
-
   return _programming;
 }
 
+
+export async function generateChannel(channel: IChannelDefinition){
+debugger
+  let channelIntance: IChannel = {
+    name: channel.name,
+    channelType: channel.channelType,
+    description: channel.description,
+    logoImg: null,
+    logoUrl: channel.logoUrl,
+    searchTxt: channel.searchTxt,
+    videos: [],
+    includeVideoId: channel.includeVideoId,
+    includedPlaylistIds: channel.includedPlaylistIds,
+    totalDuration: 0
+  };
+
+  let videos =
+    channel.searchTxt.length > 0
+      ? await getVideos({
+          type: channel.channelType,
+          searcTerms: channel.searchTxt,
+        })
+      : null;
+
+  if (videos && videos.items && videos.items.length > 0) {
+    for (let v of videos.items) {
+      console.log(v);
+      const vIntace: IVideo = {
+        name: v.snippet.title,
+        description: v.snippet.description,
+        videoId: v.id.videoId,
+        duration: 0,
+      };
+      channelIntance.videos.push(vIntace);
+    }
+  }
+
+  debugger;
+  //get included videos
+  const includedVideos = await getIncludedVideos(channel.includeVideoId);
+  const playListVideos = await getPlaylistVideo(channel.includedPlaylistIds);
+
+  channelIntance.videos.push(...includedVideos, ...playListVideos);
+  channelIntance.videos = shuffleVideos(channelIntance.videos);
+
+  await updateChannleDurations(channelIntance)
+
+  return channelIntance;
+
+}
+
 async function updateProgrammingDetails(programming: IProgramming) {
+
+
   for (let i = 0; i < programming.channelList.length; i++) {
     const updatedVideoList = await setVideoDuration(
       programming.channelList[i].videos
@@ -88,6 +107,15 @@ async function updateProgrammingDetails(programming: IProgramming) {
       0
     );
   }
+
+}
+
+
+async function updateChannleDurations(channel: IChannel) {
+    const updatedVideoList = await setVideoDuration(channel.videos);
+    channel.videos = updatedVideoList;
+    channel.totalDuration = updatedVideoList.reduce((ac, c) => ac + c.duration,0);
+  
 }
 
 async function setVideoDuration(videoList: IVideo[]) {
@@ -145,4 +173,20 @@ function shuffleVideos(videoList: IVideo[]) {
     ];
   }
   return arrayCopy;
+}
+
+async function getPlaylistVideo(playlistIds: string[]) {
+  let videos: IVideo[] = [];
+  for (let playlistId of playlistIds) {
+    let videoData = await getVideosFromPlaylist(playlistId);
+    for (let data of videoData.items) {
+      videos.push({
+        videoId: data.contentDetails.videoId,
+        name: data.snippet.title,
+        description: data.snippet.description,
+        duration: 0,
+      });
+    }
+  }
+  return videos;
 }

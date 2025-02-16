@@ -51,6 +51,39 @@ export async function getVideosDetail(
   return result;
 }
 
+
+export async function getVideosFromPlaylist(
+ playlistId:string
+): Promise<IPlaylistItemResponse> {
+  const API_KEY = await getApiKey();
+  if (API_KEY == "") throw "APIKEY not defined";
+  const options = {
+    videoEmbeddable: "true",
+    videoSyndicated: "true",
+    maxResults: 50,
+  };
+  //https://developers.google.com/youtube/v3/docs/playlistItems/list?hl=es-419
+  const response = await fetch(
+    `${BASE_API_URI}/playlistItems?key=${API_KEY}&part=contentDetails,snippet&playlistId=${playlistId}&maxResults=${options.maxResults}`,
+    {}
+  );
+  const result: IPlaylistItemResponse = await response.json();
+
+  return result;
+}
+
+
+export interface IPlaylistItemResponse {
+  items: [
+    {
+      contentDetails: {
+        videoId: string
+      },
+      snippet: Isnippet;
+    }
+  ]
+}
+
 export interface IGetVideosResponse {
   items: [
     {
