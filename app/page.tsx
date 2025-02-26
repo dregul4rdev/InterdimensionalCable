@@ -2,11 +2,12 @@
 import { useState, useEffect } from "react";
 
 import { useGobalDispatch, useGobalStorage } from './storage/GlobalProvider'
-import { generateProgramming } from './utils/prammingGenerartor'
+import { generateProgramming, generateChannel } from './utils/prammingGenerartor'
 
 import VideoScreen from './components/organisms/Screen'
 import DetailBar from './components/organisms/DetailBar';
 import { IProgramming, IChannel } from './programming'
+import  channels  from "./channels"
 
 import { calculateCurrentVideoIndexDuration } from './utils/util'
 import NoiseEffect from "./components/molecules/NoiseEffect";
@@ -73,6 +74,34 @@ export default function Home() {
     })()
   }
 
+  
+  const regenerateCurrentChannel = () => {
+    (async () => {
+      try {
+        const currentChannelDef = channels.find(el => el.name == programming.channelList[currentChannelIndex].name);
+        
+        if(currentChannelDef){
+        const newChannel= await generateChannel(currentChannelDef);
+
+        programming.channelList[currentChannelIndex] =  newChannel
+
+        localStorage.setItem('programming', JSON.stringify(programming));
+        console.log("programmign from generator:", programming)
+        GlobalDispatchContext({ type: "LOAD_PROGRAMMING", payload: programming });
+        alert("completed")
+        }else{
+              throw "Channel definition not found"
+        }
+      }
+      catch (err) {
+        console.log(err)
+      }
+    })()
+  }
+
+  
+
+
   if (DEV_MODE) {
     useEffect(() => {
       (async () => {
@@ -118,6 +147,7 @@ export default function Home() {
             previusCallback={previusChannelHandler} />
         </> : <></>}
       {DEV_MODE ?<div className=" flex flex-col z-50 absolute bottom-0 right-0 ">
+        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>regenerateCurrentChannel()}>RCC</button>
         <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler()}>Rn</button>
         <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler(false)}>R</button>
       
