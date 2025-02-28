@@ -17,11 +17,11 @@ export async function getVideos(
   
   const API_KEY = await getApiKey();
   if (API_KEY == "") throw "APIKEY not defined";
-  let query = search.searcTerms.join("%7C");
+  let query = search.searchTerms.join("%7C");
   const options = {
     videoEmbeddable: "true",
     videoSyndicated: "true",
-    maxResults: 10,
+    maxResults: 50,
   };
   //https://developers.google.com/youtube/v3/docs/search/list?hl=es-419
   const response = await fetch(
@@ -113,6 +113,6 @@ export interface Isnippet {
 }
 
 export interface ISearchObject {
-  searcTerms: Array<string>;
+  searchTerms: Array<string>;
   type: string;
 }
