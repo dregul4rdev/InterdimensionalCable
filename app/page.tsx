@@ -7,7 +7,7 @@ import { generateProgramming, generateChannel } from './utils/programingGenerart
 import VideoScreen from './components/organisms/Screen'
 import DetailBar from './components/organisms/DetailBar';
 import { IProgramming, IChannel } from './programming'
-import  channels  from "./channels"
+import channels from "./channels"
 
 import { calculateCurrentVideoIndexDuration } from './utils/util'
 import NoiseEffect from "./components/molecules/NoiseEffect";
@@ -40,8 +40,8 @@ export default function Home() {
     let newCurrentChannel = programming.channelList[nextIndex]
 
     const { videoIndex, currentSecondOfTheVideo } = calculateCurrentVideoIndexDuration(newCurrentChannel.totalDuration, newCurrentChannel.videos);
-    const nextVideo = {index: videoIndex, currentSecond: currentSecondOfTheVideo }
-    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload:  nextVideo})
+    const nextVideo = { index: videoIndex, currentSecond: currentSecondOfTheVideo }
+    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload: nextVideo })
 
   }
 
@@ -55,8 +55,8 @@ export default function Home() {
     let newCurrentChannel = programming.channelList[nextIndex]
 
     const { videoIndex, currentSecondOfTheVideo } = calculateCurrentVideoIndexDuration(newCurrentChannel.totalDuration, newCurrentChannel.videos);
-    const nextVideo = {index: videoIndex, currentSecond: currentSecondOfTheVideo }
-    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload:  nextVideo})
+    const nextVideo = { index: videoIndex, currentSecond: currentSecondOfTheVideo }
+    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload: nextVideo })
   }
 
   const gnerateProgramingHandler = (onlyNewChannels = true) => {
@@ -74,23 +74,23 @@ export default function Home() {
     })()
   }
 
-  
+
   const regenerateCurrentChannel = () => {
     (async () => {
       try {
         const currentChannelDef = channels.find(el => el.name == programming.channelList[currentChannelIndex].name);
-        
-        if(currentChannelDef){
-        const newChannel= await generateChannel(currentChannelDef);
 
-        programming.channelList[currentChannelIndex] =  newChannel
+        if (currentChannelDef) {
+          const newChannel = await generateChannel(currentChannelDef);
 
-        localStorage.setItem('programming', JSON.stringify(programming));
-        console.log("programmign from generator:", programming)
-        GlobalDispatchContext({ type: "LOAD_PROGRAMMING", payload: programming });
-        alert("completed")
-        }else{
-              throw "Channel definition not found"
+          programming.channelList[currentChannelIndex] = newChannel
+
+          localStorage.setItem('programming', JSON.stringify(programming));
+          console.log("programmign from generator:", programming)
+          GlobalDispatchContext({ type: "LOAD_PROGRAMMING", payload: programming });
+          alert("completed")
+        } else {
+          throw "Channel definition not found"
         }
       }
       catch (err) {
@@ -99,7 +99,7 @@ export default function Home() {
     })()
   }
 
-  
+
 
 
   if (DEV_MODE) {
@@ -132,7 +132,7 @@ export default function Home() {
 
       {currentChannel && currentChannel.videos ?
         <>
-         <NoiseEffect visible ={noiseVisible }/>
+          <NoiseEffect visible={noiseVisible} />
           <VideoScreen
             key={currentChannel.name}
             videos={currentChannel.videos}
@@ -146,14 +146,15 @@ export default function Home() {
             nextCallback={nextChannelHandler}
             previusCallback={previusChannelHandler} />
         </> : <></>}
-      {DEV_MODE ?<div className=" flex flex-col z-50 absolute bottom-0 right-0 ">
-        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>regenerateCurrentChannel()}>RCC</button>
-        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler()}>Rn</button>
-        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>gnerateProgramingHandler(false)}>R</button>
-      <div className="text-white">total Videos: {currentChannel.videos.length} </div>
-        </div>
-         :
+      {DEV_MODE ? <div className=" flex flex-col z-50 absolute top-0 right-0 ">
+        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={() => regenerateCurrentChannel()}>RCC</button>
+        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={() => gnerateProgramingHandler()}>Rn</button>
+        <button className="m-4  bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={() => gnerateProgramingHandler(false)}>R</button>
+        <div className="text-white">total Videos: {currentChannel.videos.length} </div>
+      </div>
+        :
         <></>}
+
     </main>
   )
 }

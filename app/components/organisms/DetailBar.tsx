@@ -13,9 +13,10 @@ const DetailBar = ({channel, video, nextCallback,previusCallback }:{channel:ICha
         </div>
         <div id="channelDetails" className=" basis-3/5 flex-auto pl-10  ">
             <h2 className="font-bold text-3xl text-gray-300 my-2">{video.name}</h2>
-            <p className=" text-xl text-gray-500">{video.description}</p>
+            <p  className=" text-xl text-gray-500">{video.description.length > 200? `${video.description.substring(0,200)}...`:video.description}</p>
         </div>
         <div id="channelDetails" className=" basis-1/5 flex-auto pl-10  ">
+        <a href='https://ko-fi.com/Q5Q71BDVV5' className=" fixed right-0 p-5" target='_blank'><img height='36' className=" h-10 border-none"  src='https://storage.ko-fi.com/cdn/kofi5.png?v=6'  alt='Buy Me a Coffee at ko-fi.com' /></a>
         </div>
     </div>)
 }
