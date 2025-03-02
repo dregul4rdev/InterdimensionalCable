@@ -7,7 +7,7 @@ import { IChannel, IVideo } from '@/app/programming'
 const DetailBar = ({channel, video, nextCallback,previusCallback }:{channel:IChannel, video:IVideo, nextCallback:Function,previusCallback:Function }) => {
   
 
-    return (<div className=" z-50 flex grow-0 shrink-0   w-full flex-row   bg-gray-950 py-10">
+    return (<div className=" z-50 flex grow-0 shrink-0   w-full flex-col sm:flex-row   bg-gray-950 py-10">
         <div id="channelIcon" className="flex-auto  basis-1/5 px-20 items-center  border-r border-gray-800">
             <ChannelControl channel = {channel} upArrowCallback ={previusCallback}  downArrowCallback= {nextCallback}  />
         </div>
