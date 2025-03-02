@@ -2,6 +2,7 @@
 Based on Interdimensional cable from **Rick and Morty**. "Interdimensional cable webpage" is the idea of having a website that can simulate the functionalities of a traditional TV cable, with a dynamic compilation of YouTube videos that may be considered from another dimension.
 
 
+
 ![alt text](https://static1.srcdn.com/wordpress/wp-content/uploads/2019/12/Interdimensional-Cable.jpg)
 
 ---
@@ -9,7 +10,8 @@ Based on Interdimensional cable from **Rick and Morty**. "Interdimensional cable
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
-
+ 
+ 
 First, run the development server:
 
 ```bash

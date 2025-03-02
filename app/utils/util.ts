@@ -1,4 +1,8 @@
-import { IVideo } from "../programming";
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import { IVideo } from '../programming';
+
+dayjs.extend(duration);
 
 export const calculateCurrentVideoIndex = (totalOfVideos: number) => {
   const MINUTES_OF_THE_DAY = 1440;
@@ -33,26 +37,8 @@ export const calculateCurrentVideoIndexDuration = (
   return { videoIndex: videoIndex - 1, currentSecondOfTheVideo };
 };
 
-export const validateIndex = (index: number, lastIndex: number) => {
-  if (index <= lastIndex) return index;
-  else {
-    return index % lastIndex;
-  }
+export const getValidIndex = (index: number, arraySize: number) => {
+  return index % arraySize;
 };
 
-export const convertISO8601ToSenconds = (durationStringISO8601: string) => {
-  var reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/;
-  var hours = 0,
-    minutes = 0,
-    seconds = 0,
-    totalseconds = 0;
-
-  if (reptms.test(durationStringISO8601)) {
-    var matches = reptms.exec(durationStringISO8601);
-    if (matches?.[1]) hours = Number(matches[1]);
-    if (matches?.[2]) minutes = Number(matches[2]);
-    if (matches?.[3]) seconds = Number(matches[3]);
-    totalseconds = hours * 3600 + minutes * 60 + seconds;
-  }
-  return totalseconds;
-};
+export { dayjs };
