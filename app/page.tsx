@@ -7,7 +7,8 @@ import { generateProgramming, generateChannel } from './utils/programingGenerart
 import VideoScreen from './components/organisms/Screen'
 import DetailBar from './components/organisms/DetailBar';
 import { IProgramming, IChannel } from './programming'
-import channels from "./channels"
+import  channels  from "./channels"
+
 
 import { calculateCurrentVideoIndexDuration } from './utils/util'
 import NoiseEffect from "./components/molecules/NoiseEffect";
@@ -40,8 +41,8 @@ export default function Home() {
     let newCurrentChannel = programming.channelList[nextIndex]
 
     const { videoIndex, currentSecondOfTheVideo } = calculateCurrentVideoIndexDuration(newCurrentChannel.totalDuration, newCurrentChannel.videos);
-    const nextVideo = { index: videoIndex, currentSecond: currentSecondOfTheVideo }
-    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload: nextVideo })
+    const nextVideo = {index: videoIndex, currentSecond: currentSecondOfTheVideo }
+    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload:  nextVideo})
 
   }
 
@@ -55,8 +56,8 @@ export default function Home() {
     let newCurrentChannel = programming.channelList[nextIndex]
 
     const { videoIndex, currentSecondOfTheVideo } = calculateCurrentVideoIndexDuration(newCurrentChannel.totalDuration, newCurrentChannel.videos);
-    const nextVideo = { index: videoIndex, currentSecond: currentSecondOfTheVideo }
-    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload: nextVideo })
+    const nextVideo = {index: videoIndex, currentSecond: currentSecondOfTheVideo }
+    GlobalDispatchContext({ type: "SET_CURRENT_VIDEO", payload:  nextVideo})
   }
 
   const gnerateProgramingHandler = (onlyNewChannels = true) => {
@@ -73,24 +74,25 @@ export default function Home() {
       }
     })()
   }
-
-
+ 
   const regenerateCurrentChannel = () => {
     (async () => {
       try {
         const currentChannelDef = channels.find(el => el.name == programming.channelList[currentChannelIndex].name);
 
-        if (currentChannelDef) {
-          const newChannel = await generateChannel(currentChannelDef);
+        
+        if(currentChannelDef){
+        const newChannel= await generateChannel(currentChannelDef);
 
-          programming.channelList[currentChannelIndex] = newChannel
+        programming.channelList[currentChannelIndex] =  newChannel
 
-          localStorage.setItem('programming', JSON.stringify(programming));
-          console.log("programmign from generator:", programming)
-          GlobalDispatchContext({ type: "LOAD_PROGRAMMING", payload: programming });
-          alert("completed")
-        } else {
-          throw "Channel definition not found"
+        localStorage.setItem('programming', JSON.stringify(programming));
+        console.log("programmign from generator:", programming)
+        GlobalDispatchContext({ type: "LOAD_PROGRAMMING", payload: programming });
+        alert("completed")
+        }else{
+              throw "Channel definition not found"
+
         }
       }
       catch (err) {
@@ -98,9 +100,6 @@ export default function Home() {
       }
     })()
   }
-
-
-
 
   if (DEV_MODE) {
     useEffect(() => {

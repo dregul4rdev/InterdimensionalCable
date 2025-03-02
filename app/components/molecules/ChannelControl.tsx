@@ -29,5 +29,4 @@ const ChannelControl = ({ channel, upArrowCallback, downArrowCallback }: { chann
 
 }
 
-
 export default ChannelControl
