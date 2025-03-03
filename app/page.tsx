@@ -15,7 +15,7 @@ import NoiseEffect from "./components/molecules/NoiseEffect";
 
 
 export default function Home() {
-  const DEV_MODE = true;
+  const DEV_MODE = false;
   const [currentChannelIndex, setCurrentChannelIndex] = useState(0);
   const [noiseVisible, setNoiseVisible] = useState(false);
   const { programming, currentVideo } = useGobalStorage();
