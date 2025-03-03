@@ -1,6 +1,6 @@
 'use server'
  async function getApiKey() {
-  const key =  process.env.YOUTUBE_API? process.env.YOUTUBE_API: "";  
+  const key =  process.env.NEXT_PUBLIC_YOUTUBE_API? process.env.NEXT_PUBLIC_YOUTUBE_API: "";  
   return key;
 }
 
