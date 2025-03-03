@@ -130,7 +130,7 @@ export default function Home() {
 
   return (
 
-    <main className="container flex flex-col h-screen  min-w-full max-h-screen   min-h-screen bg-indigo-500">
+    <main className=" flex flex-col h-screen  min-w-full  min-h-screen bg-black">
 
       {currentChannel && currentChannel.videos ?
         <>
