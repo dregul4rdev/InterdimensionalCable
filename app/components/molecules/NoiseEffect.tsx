@@ -1,8 +1,8 @@
 
 const env = process.env.NODE_ENV
-let ASSET_PATH = "/InterdimensialCable"
+let ASSET_PATH = ""
 if(env == "production"){
-  ASSET_PATH = "/InterdimensialCable"
+  ASSET_PATH = "/InterdimensionalCable"
 }
 
 
