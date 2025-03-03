@@ -1,11 +1,12 @@
+import { dayjs } from "./util";
+import { IChannel, IProgramming, IVideo } from "../programming";
 import channels, { IChannelDefinition } from "../channels";
 import {
   getVideos,
   getVideosDetail,
   getVideosFromPlaylist,
+  ISearchObject,
 } from "../apis/youtube-api";
-import { IProgramming, IChannel, IVideo } from "../programming";
-import { convertISO8601ToSenconds } from "./util";
 
 export async function generateProgramming(
   onlyNewChannels = true,
@@ -29,8 +30,7 @@ export async function generateProgramming(
         };
 
   for (let channel of _channels) {
-
-   const  channelIntance = await  generateChannel(channel);
+    const channelIntance = await generateChannel(channel);
 
     if (channelIntance.videos.length > 0) {
       console.log(channel.name, " Added!!");
@@ -43,9 +43,7 @@ export async function generateProgramming(
   return _programming;
 }
 
-
-export async function generateChannel(channel: IChannelDefinition){
-debugger
+export async function generateChannel(channel: IChannelDefinition) {
   let channelIntance: IChannel = {
     name: channel.name,
     channelType: channel.channelType,
@@ -56,66 +54,51 @@ debugger
     videos: [],
     includeVideoId: channel.includeVideoId,
     includedPlaylistIds: channel.includedPlaylistIds,
-    totalDuration: 0
+    totalDuration: 0,
   };
+  debugger;
+  //get Videos
+  const videosFromSearchText = await getVideosFromSearchTexts(
+    channel.searchTxt
+  );
+  const includedVideos = await getIncludedVideos(channel.includeVideoId);
+  const playListVideos = await getPlaylistVideo(channel.includedPlaylistIds);
 
-  let videos =
-    channel.searchTxt.length > 0
-      ? await getVideos({
-          type: channel.channelType,
-          searcTerms: channel.searchTxt,
-        })
-      : null;
+  channelIntance.videos.push(
+    ...includedVideos,
+    ...playListVideos,
+    ...videosFromSearchText
+  );
+  channelIntance.videos = shuffleVideos(channelIntance.videos);
 
-  if (videos && videos.items && videos.items.length > 0) {
-    for (let v of videos.items) {
-      console.log(v);
+  await updateChannleDurations(channelIntance);
+
+  return channelIntance;
+}
+
+async function getVideosFromSearchTexts(searchText: string[]) {
+  const searchObj: ISearchObject = { searchTerms: searchText, type: "video" };
+  let videos: IVideo[] = [];
+  let videoData = searchText.length > 0 ? await getVideos(searchObj) : null;
+debugger
+  if (videoData && videoData.items && videoData.items.length > 0) {
+    for (let v of videoData.items) {
       const vIntace: IVideo = {
         name: v.snippet.title,
         description: v.snippet.description,
         videoId: v.id.videoId,
         duration: 0,
       };
-      channelIntance.videos.push(vIntace);
+
+      videos.push(vIntace);
     }
   }
-
-  debugger;
-  //get included videos
-  const includedVideos = await getIncludedVideos(channel.includeVideoId);
-  const playListVideos = await getPlaylistVideo(channel.includedPlaylistIds);
-
-  channelIntance.videos.push(...includedVideos, ...playListVideos);
-  channelIntance.videos = shuffleVideos(channelIntance.videos);
-
-  await updateChannleDurations(channelIntance)
-
-  return channelIntance;
-
+  videos = await setVideoDuration(videos);
+  return videos;
 }
-
-async function updateProgrammingDetails(programming: IProgramming) {
-
-
-  for (let i = 0; i < programming.channelList.length; i++) {
-    const updatedVideoList = await setVideoDuration(
-      programming.channelList[i].videos
-    );
-    programming.channelList[i].videos = updatedVideoList;
-    programming.channelList[i].totalDuration = updatedVideoList.reduce(
-      (ac, c) => ac + c.duration,
-      0
-    );
-  }
-
-}
-
 
 async function updateChannleDurations(channel: IChannel) {
-    const updatedVideoList = await setVideoDuration(channel.videos);
-    channel.videos = updatedVideoList;
-    channel.totalDuration = updatedVideoList.reduce((ac, c) => ac + c.duration,0);
-  
+  channel.totalDuration = channel.videos.reduce((ac, c) => ac + c.duration, 0);
 }
 
 async function setVideoDuration(videoList: IVideo[]) {
@@ -130,7 +113,7 @@ async function setVideoDuration(videoList: IVideo[]) {
       if (item.videoId === data.id) {
         video = {
           ...video,
-          duration: convertISO8601ToSenconds(data.contentDetails.duration),
+          duration: dayjs.duration(data.contentDetails.duration).asSeconds(),
         };
         break;
       }
@@ -150,7 +133,7 @@ async function getIncludedVideos(videIds: string[]) {
       videoId: data.id,
       name: data.snippet.title,
       description: data.snippet.description,
-      duration: convertISO8601ToSenconds(data.contentDetails.duration),
+      duration: dayjs.duration(data.contentDetails.duration).asSeconds(),
     });
   }
   return videos;
@@ -178,6 +161,7 @@ function shuffleVideos(videoList: IVideo[]) {
 async function getPlaylistVideo(playlistIds: string[]) {
   let videos: IVideo[] = [];
   for (let playlistId of playlistIds) {
+    try{
     let videoData = await getVideosFromPlaylist(playlistId);
     for (let data of videoData.items) {
       videos.push({
@@ -187,6 +171,11 @@ async function getPlaylistVideo(playlistIds: string[]) {
         duration: 0,
       });
     }
+    videos = await setVideoDuration(videos);  
+  }catch(e){
+   console.log("error playlistId:"+playlistId+" error: "+e)
   }
+  }
+ 
   return videos;
 }
