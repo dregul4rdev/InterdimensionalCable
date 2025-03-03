@@ -4,7 +4,7 @@ import { ArrowDownBtn, ArrowUpBtn } from "../atoms/ArrowBtn"
 import { IChannel } from '@/app/programming'
 
 const env = process.env.NODE_ENV
-let ASSET_PATH = ""
+let ASSET_PATH = "/InterdimensialCable"
 if(env == "production"){
   ASSET_PATH = "/InterdimensialCable"
 }
