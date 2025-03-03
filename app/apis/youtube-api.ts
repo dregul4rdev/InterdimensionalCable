@@ -1,7 +1,6 @@
-
+'use server'
  async function getApiKey() {
   const key =  process.env.NEXT_PUBLIC_YOUTUBE_API? process.env.NEXT_PUBLIC_YOUTUBE_API: "";  
- debugger
   return key;
 }
 
