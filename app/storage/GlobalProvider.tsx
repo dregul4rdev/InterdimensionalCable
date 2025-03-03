@@ -2,17 +2,18 @@ import { useReducer, useContext, createContext, useEffect } from "react";
 
 import programming, { IProgramming } from '../programming'
 import { globalReducer } from './globalReducer'
+import { calculateCurrentVideoIndexDuration } from "../utils/util";
 
 export interface IGlobalStorage {
     programming: IProgramming,
     currentChannelIndex: number,
     currentVideo: {index: number, currentSecond: number}
 }
-
+const { videoIndex, currentSecondOfTheVideo } = calculateCurrentVideoIndexDuration(programming.channelList[0].totalDuration, programming.channelList[0].videos);
 const storage: IGlobalStorage = {
     programming: programming,
     currentChannelIndex: 0,
-    currentVideo: {index: 0, currentSecond: 0}
+    currentVideo: {index: videoIndex, currentSecond: currentSecondOfTheVideo}
 }
 
 
