@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { IVideo } from '../programming';
+import  utc  from  "dayjs/plugin/utc";
 
+dayjs.extend(utc);
 dayjs.extend(duration);
 
 export const calculateCurrentVideoIndex = (totalOfVideos: number) => {
@@ -19,9 +21,9 @@ export const calculateCurrentVideoIndexDuration = (
   videos: IVideo[]
 ) => {
   if (!totalDuration) return { videoIndex: 0, currentSecondOfTheVideo: 0 };
-  let date = new Date();
+  let date = dayjs()
   let currentSecondsOfTheDay =
-    date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+    date.hour() * 3600 + date.minute() * 60 + date.second();
   let normalizedScondsOfTheDay = currentSecondsOfTheDay % totalDuration;
 
   let counter = 0;

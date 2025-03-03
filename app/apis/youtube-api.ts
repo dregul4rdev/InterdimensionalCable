@@ -1,12 +1,7 @@
-
+'use server'
  async function getApiKey() {
-  return import("../../API_KEY.json").then(m=>{
-    if(m.YOUTUBE_API){
-      return m.YOUTUBE_API
-    } 
-    return ""
-  })
-  
+  const key =  process.env.YOUTUBE_API? process.env.YOUTUBE_API: "";  
+  return key;
 }
 
 const BASE_API_URI = "https://youtube.googleapis.com/youtube/v3";
@@ -21,7 +16,7 @@ export async function getVideos(
   const options = {
     videoEmbeddable: "true",
     videoSyndicated: "true",
-    maxResults: 50,
+    maxResults: 10,
   };
   //https://developers.google.com/youtube/v3/docs/search/list?hl=es-419
   const response = await fetch(
